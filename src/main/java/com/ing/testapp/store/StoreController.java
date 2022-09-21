@@ -2,12 +2,15 @@ package com.ing.testapp.store;
 
 import com.ing.testapp.exceptions.InvalidProductIdException;
 import com.ing.testapp.exceptions.ProductIdNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+@Slf4j
 @RestController
 @RequestMapping(path = "/store")
 public class StoreController {
@@ -20,8 +23,11 @@ public class StoreController {
     ) {
         try {
             productRepository.save(newProduct);
+
+            log.info(String.format("Product with id: %d added successfully.", newProduct.getId()));
             return new ResponseEntity<>("New product added successfully.", HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            log.error("Error on save operation.", e);
             return new ResponseEntity<>("Error encountered on add operation.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -39,8 +45,10 @@ public class StoreController {
 
         try {
             productRepository.deleteById(id);
-            return new ResponseEntity<>(String.format("Product with id: %d deleted successfully.", id), HttpStatus.OK);
+            log.info(String.format("Product with id: %d deleted successfully.", id));
+            return new ResponseEntity<>("Product deleted successfully.", HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error on delete operation", e);
             return new ResponseEntity<>("Error encountered on delete operation.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -66,8 +74,10 @@ public class StoreController {
                 .orElseGet(() -> newProduct);
 
             productRepository.save(updatedProduct);
-            return new ResponseEntity<>(String.format("Product with id: %d updated successfully.", id), HttpStatus.OK);
+            log.info(String.format("Product with id: %d updated successfully.", id));
+            return new ResponseEntity<>("Product updated successfully.", HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error on update operation.", e);
             return new ResponseEntity<>("Error encountered on update operation.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -77,8 +87,9 @@ public class StoreController {
             @RequestParam String colour
     ) {
         try {
-            return new ResponseEntity(productRepository.findByColour(colour), HttpStatus.OK);
+            return new ResponseEntity<>(productRepository.findByColour(colour), HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error encountered on findByColour operation.", e);
             return new ResponseEntity<>("Error encountered on find operation.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -95,8 +106,9 @@ public class StoreController {
         }
 
         try {
-            return new ResponseEntity(productRepository.findById(id).get(), HttpStatus.OK);
+            return new ResponseEntity<>(productRepository.findById(id).get(), HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error encountered on findById operation.", e);
             return new ResponseEntity<>("Error encountered on find operation.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -104,8 +116,9 @@ public class StoreController {
     @GetMapping(path = "/all_products")
     public ResponseEntity<Object> getAllProducts() {
         try {
-            return new ResponseEntity(productRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error encountered on findAll operation.", e);
             return new ResponseEntity<>("Error encountered on find operation.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
