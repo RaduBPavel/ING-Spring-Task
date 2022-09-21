@@ -11,11 +11,12 @@ import javax.persistence.Id;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class FictionalProduct {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
-    private double price;
+    private Double price;
+    private String colour;
 }
