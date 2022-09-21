@@ -45,6 +45,7 @@ public class StoreController {
 
         try {
             productRepository.deleteById(id);
+
             log.info(String.format("Product with id: %d deleted successfully.", id));
             return new ResponseEntity<>("Product deleted successfully.", HttpStatus.OK);
         } catch (Exception e) {
@@ -74,6 +75,7 @@ public class StoreController {
                 .orElseGet(() -> newProduct);
 
             productRepository.save(updatedProduct);
+
             log.info(String.format("Product with id: %d updated successfully.", id));
             return new ResponseEntity<>("Product updated successfully.", HttpStatus.OK);
         } catch (Exception e) {
