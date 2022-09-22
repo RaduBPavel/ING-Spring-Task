@@ -17,6 +17,11 @@ public class StoreController {
     @Autowired
     private ProductRepository productRepository;
 
+    /***
+     * Adds a new product to the store.
+     * @param newProduct details of the new product
+     * @return Message which says if the operation succeeded or failed
+     */
     @PostMapping(path = "/add_product", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addProduct(
             @RequestBody Product newProduct
@@ -32,6 +37,11 @@ public class StoreController {
         }
     }
 
+    /***
+     * Deletes a product from the store, based on its id.
+     * @param id unique ID of the product
+     * @return Message which says if the operation succeeded or failed
+     */
     @DeleteMapping(path = "/delete_product")
     public ResponseEntity<String> deleteProduct(
             @RequestParam Integer id
@@ -54,6 +64,12 @@ public class StoreController {
         }
     }
 
+    /***
+     * Updates the information of a product in the store.
+     * @param id unique ID of the product
+     * @param newProduct details of the product
+     * @return Newly updated Product if the operation is successful, otherwise an error message
+     */
     @PutMapping(path = "/update_product", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateProduct(
             @RequestParam Integer id,
@@ -84,6 +100,11 @@ public class StoreController {
         }
     }
 
+    /***
+     * Returns a list of all the products that have a specific colour.
+     * @param colour queried colour of the products
+     * @return List of Product objects that have the specified color if successful, error message otherwise
+     */
     @GetMapping(path = "/find_colour")
     public ResponseEntity<Object> getProductsByColour(
             @RequestParam String colour
@@ -96,6 +117,11 @@ public class StoreController {
         }
     }
 
+    /***
+     * Returns a specific product, based on its id.
+     * @param id unique ID of the product
+     * @return The Product if successful, error message otherwise
+     */
     @GetMapping(path = "/find_product")
     public ResponseEntity<Object> getProductById(
             @RequestParam Integer id
@@ -115,6 +141,10 @@ public class StoreController {
         }
     }
 
+    /***
+     * Returns a list of all the Products in the store.
+     * @return List of Product objects if successful, error message otherwise
+     */
     @GetMapping(path = "/all_products")
     public ResponseEntity<Object> getAllProducts() {
         try {
