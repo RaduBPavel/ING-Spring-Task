@@ -21,9 +21,9 @@ This is a simple Spring Boot application which acts as a store for a generic Pro
 ---
 | Request                      | Request Params | Request Body    | Response      |
 |------------------------------|----------------|-----------------|---------------|
-| GET /store/all_products      | -              | -               | List<Product> |
+| GET /store/all_products      | -              | -               | List\<Product> |
 | GET /store/find_product      | Integer id     | -               | Product       |
-| GET /store/find_colour       | String colour  | -               | List<Product> |
+| GET /store/find_colour       | String colour  | -               | List\<Product> |
 | POST /store/add_product      | -              | Product product | String        |
 | PUT /store/update_product    | Integer id     | Product product | String        |
 | DELETE /store/delete_product | Integer id     | -               | String        |
